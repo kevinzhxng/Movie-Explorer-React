@@ -2,22 +2,23 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 function Movies() {
-  const [movies, setMovies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchMovies, setSearchMovies] = useState([]);
 
   async function fetchMovies(event) {
     event.preventDefault();
     const response = await axios.get(
-      `https://www.omdbapi.com/?i=tt3896198&apikey=1e94ff26&s=${searchMovies}`
+      `https://www.omdbapi.com/?i=tt3896198&apikey=1e94ff26&s=${searchTerm}`
     );
     setSearchMovies(response.data.Search);
+
   }
 
   function sortMovies(filter) {
-    const sortedMovies = [...searchMovies]
+    const sortedMovies = [...searchMovies];
 
     if (filter === "Latest-Movies") {
       sortedMovies.sort(
@@ -31,12 +32,10 @@ function Movies() {
       );
     }
 
-    setSearchMovies(sortedMovies)
-
-    console.log(searchMovies)
-
-
+    setSearchMovies(sortedMovies);
   }
+
+
 
   return (
     <>
@@ -56,7 +55,7 @@ function Movies() {
                 type="text"
                 className="w-[500px] rounded-[24px] bg-input_blue p-[12px] text-2xl shadow-lg focus:outline-none focus:shadow-inner-2xl"
                 placeholder="Browse..."
-                onChange={(event) => setSearchMovies(event.target.value)}
+                onChange={(event) => setSearchTerm(event.target.value)}
               />
               <button
                 type="submit"
@@ -78,19 +77,21 @@ function Movies() {
               <option value="Oldest-Movies">Oldest Movies</option>
             </select>
             <div className="flex-wrap flex w-full max-w-[1000px] ">
-              {
-              searchMovies.map((movie) => (
-                <div className="w-3/12">
+              {searchMovies.map((movie) => (
+                <div className="w-3/12 ">
                   <div className="p-[18px]">
-                    <img className="w-8/10" src={movie.Poster} alt="" />
-                    <h3 className="w-full">
-                      <b>{movie.Title}</b>
-                    </h3>
-                    <p className="w-full">{movie.Year}</p>
+                    <div className="hover:cursor-pointer">
+                    <Link to={`/movies/${movie.imdbID}`}>
+                      <img className="w-8/10" src={movie.Poster} alt="" />
+                      <h3 className="w-full">
+                        <b>{movie.Title}</b>
+                      </h3>
+                      <p className="w-full">{movie.Year}</p>
+                    </Link>
+                    </div>
                   </div>
                 </div>
-              ))
-              }
+              ))}
             </div>
           </div>
         </div>
