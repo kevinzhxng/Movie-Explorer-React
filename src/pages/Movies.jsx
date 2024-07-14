@@ -6,28 +6,32 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 function Movies() {
   const [movies, setMovies] = useState([]);
-  const [searchMovies, setSearchMovies] = useState();
+  const [searchMovies, setSearchMovies] = useState([]);
 
   async function fetchMovies(event) {
     event.preventDefault();
     const response = await axios.get(
       `https://www.omdbapi.com/?i=tt3896198&apikey=1e94ff26&s=${searchMovies}`
     );
-    setMovies(response.data.Search);
+    setSearchMovies(response.data.Search);
   }
 
   function sortMovies(filter) {
+    const sortedMovies = [...searchMovies]
+
     if (filter === "Latest-Movies") {
-      searchMovies.sort(
+      sortedMovies.sort(
         (a, b) =>
           parseInt(b.Year.substring(0, 4)) - parseInt(a.Year.substring(0, 4))
       );
     } else if (filter === "Oldest-Movies") {
-      searchMovies.sort(
+      sortedMovies.sort(
         (a, b) =>
           parseInt(a.Year.substring(0, 4)) - parseInt(b.Year.substring(0, 4))
       );
     }
+
+    setSearchMovies(sortedMovies)
 
     console.log(searchMovies)
 
@@ -75,7 +79,7 @@ function Movies() {
             </select>
             <div className="flex-wrap flex w-full max-w-[1000px] ">
               {
-              movies.map((movie) => (
+              searchMovies.map((movie) => (
                 <div className="w-3/12">
                   <div className="p-[18px]">
                     <img className="w-8/10" src={movie.Poster} alt="" />
