@@ -7,8 +7,8 @@ const Landing = () => {
       <header>
         <div className="header__container">
           <div className="header__row">
-            <h2>Find your favorite movies with</h2>
-            <h1>Movie Explorer</h1>
+            <h2 className="font-semibold">Find your favorite movies with</h2>
+            <h1 className="font-bold">Movie Explorer</h1>
             <div className="search">
               <a href="./movies">
                 <button className="button">SEARCH</button>

@@ -5,6 +5,10 @@ import Home from "./pages/Home";
 import Movies from "./pages/Movies";
 
 function App() {
+
+  
+
+
   return (
     <Router>
       <div className="App">
