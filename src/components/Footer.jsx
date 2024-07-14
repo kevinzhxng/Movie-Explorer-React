@@ -7,18 +7,18 @@ function Footer() {
   return (
     <>
       <section id="footer">
-        <div class="footer__container">
+        <div className="footer__container">
           <hr />
-          <div class="footer__row">
+          <div className="footer__row">
             <img
-              class="footer__img"
+              className="footer__img"
               src={Logo}
               alt=""
             />
-            <p class="footer__copyright">
+            <p className="footer__copyright">
             © Movie Explorer All Rights Reserved
             </p>
-            <ul class="footer__github">
+            <ul className="footer__github">
               <a
                 href="https://github.com/kevinzhxng/Movie-Explorer-API-Project"
                 target="_blank"
