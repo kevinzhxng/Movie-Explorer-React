@@ -2,24 +2,43 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 function Movies() {
   const [movies, setMovies] = useState([]);
+  const [searchMovies, setSearchMovies] = useState();
 
-  async function fetchMovies() {
-    console.log("test")
+  async function fetchMovies(event) {
+    event.preventDefault();
     const response = await axios.get(
-      `https://www.omdbapi.com/?i=tt3896198&apikey=1e94ff26&s=naruto`
+      `https://www.omdbapi.com/?i=tt3896198&apikey=1e94ff26&s=${searchMovies}`
     );
-    console.log(response)
-    setMovies(response);
+    setMovies(response.data.Search);
+  }
+
+  function sortMovies(filter) {
+    if (filter === "Latest-Movies") {
+      searchMovies.sort(
+        (a, b) =>
+          parseInt(b.Year.substring(0, 4)) - parseInt(a.Year.substring(0, 4))
+      );
+    } else if (filter === "Oldest-Movies") {
+      searchMovies.sort(
+        (a, b) =>
+          parseInt(a.Year.substring(0, 4)) - parseInt(b.Year.substring(0, 4))
+      );
+    }
+
+    console.log(searchMovies)
+
+
   }
 
   return (
     <>
       <section
         id="movie__page"
-        className="bg-[linear-gradient(_#6ab8c4,#fa8c2b,#fa8c2b,#fa8c2b,#fa8c2b,#fa8c2b,#fa8c2b,#fc4863_)] flex flex-col w-full h-full"
+        className="bg-[linear-gradient(_#6ab8c4,#fa8c2b,#fa8c2b,#fa8c2b,#fa8c2b,#fa8c2b,#fc4863,#fc4863_)] flex flex-col w-full min-h-screen"
       >
         <div className="w-full mx-auto">
           <div className="w-full flex flex-col items-center">
@@ -27,15 +46,17 @@ function Movies() {
             <form
               action=""
               className="relative w-full max-w-[500px] flex items-center justify-end"
+              onSubmit={fetchMovies}
             >
               <input
                 type="text"
                 className="w-[500px] rounded-[24px] bg-input_blue p-[12px] text-2xl shadow-lg focus:outline-none focus:shadow-inner-2xl"
                 placeholder="Browse..."
+                onChange={(event) => setSearchMovies(event.target.value)}
               />
               <button
+                type="submit"
                 className="absolute text-4xl bg-[#6ab8c4] w-20 transition-all duration-200 ease-[ease] mr-[5px] rounded-3xl border-[none] hover:brightness-[110%] active:brightness-[70%]"
-                onClick={() => fetchMovies()}
               >
                 <FontAwesomeIcon icon={faSearch} className="p-[6px]" />
               </button>
@@ -43,7 +64,7 @@ function Movies() {
             {/* TODO filter movies */}
             <select
               id="filter"
-              onchange="filterMovies(event)"
+              onChange={(event) => sortMovies(event.target.value)}
               className="text-base mt-6 p-2 rounded-lg border-[none] bg-gradient-to-r from-cyan-500 to-blue-500"
             >
               <option value="" disabled selected>
@@ -52,21 +73,20 @@ function Movies() {
               <option value="Latest-Movies">Latest Movies</option>
               <option value="Oldest-Movies">Oldest Movies</option>
             </select>
-            <div className="flex-wrap flex w-full max-w-[1000px]">
-              
-              <div className="w-3/12">
-                <div className="p-[18px]">
-                  <img
-                    className="w-8/10"
-                    src="https://m.media-amazon.com/images/M/MV5BZGFiMWFhNDAtMzUyZS00NmQ2LTljNDYtMmZjNTc5MDUxMzViXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_SX300.jpg"
-                    alt=""
-                  />
-                  <h3 className="w-full">
-                    <b>movie.title</b>
-                  </h3>
-                  <p className="w-full">movie.year</p>
+            <div className="flex-wrap flex w-full max-w-[1000px] ">
+              {
+              movies.map((movie) => (
+                <div className="w-3/12">
+                  <div className="p-[18px]">
+                    <img className="w-8/10" src={movie.Poster} alt="" />
+                    <h3 className="w-full">
+                      <b>{movie.Title}</b>
+                    </h3>
+                    <p className="w-full">{movie.Year}</p>
+                  </div>
                 </div>
-              </div>
+              ))
+              }
             </div>
           </div>
         </div>
