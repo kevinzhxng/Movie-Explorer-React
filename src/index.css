@@ -1,13 +1,286 @@
-body {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  box-sizing: border-box;
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: "Kanit", sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/*
+
+GENERICS
+
+*/
+
+html {
+  scroll-behavior: smooth;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+nav {
+  background-color: #6ab8c4;
+}
+
+.click {
+  cursor: pointer;
+}
+
+/*
+
+NAV
+
+*/
+
+.nav__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.logo {
+  width: 100px;
+}
+
+.nav__links {
+  display: flex;
+}
+
+.nav__link {
+  font-size: 24px;
+  font-weight: 500;
+  margin-right: 24px;
+}
+
+/*
+
+HEADER
+
+*/
+
+header {
+  background-image: linear-gradient(
+    #6ab8c4,
+    #fa8c2b,
+    #fa8c2b,
+    #fa8c2b,
+    #fa8c2b,
+    #fa8c2b,
+    #fa8c2b,
+    #fc4863
+  );
+  height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.header__container {
+  width: 100%;
+  margin: 0 auto;
+  
+}
+
+.header__row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h2 {
+  font-size: 48px;
+}
+
+h1 {
+  font-size: 108px;
+  background: radial-gradient(circle, #2faabd, #df2742);
+  background-clip: text;
+  color: transparent;
+  animation: movie 5s linear infinite;
+  background-size: 200% 20%;
+}
+
+@keyframes movie {
+  0% {
+    background-position: 100% 100%;
+  }
+
+  100% {
+    background-position: 450% 0%;
+  }
+}
+
+.search {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  padding: 42px 0 32px 0;
+}
+
+.button {
+  min-width: 300px;
+  min-height: 60px;
+  display: inline-flex;
+  font-family: 'Kanit', sans-serif;
+  font-size: 22px;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  color: #313133;
+  background: #4FD1C5;
+  background: linear-gradient(90deg, rgba(129,230,217,1) 0%, rgba(79,209,197,1) 100%);
+  border: none;
+  border-radius: 1000px;
+  box-shadow: 12px 12px 24px rgba(79,209,197,.64);
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  padding: 10px;
+  }
+
+.button::before {
+  content: '';
+  border-radius: 1000px;
+  min-width: calc(300px + 12px);
+  min-height: calc(60px + 12px);
+  border: 6px solid #00FFCB;
+  box-shadow: 0 0 60px rgba(0,255,203,.64);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all .3s ease-in-out 0s;
+}
+
+.button:hover, 
+.button:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+.button:hover::before, 
+.button:focus::before {
+  opacity: 1;
+}
+
+
+.header__img {
+  width: 100%;
+  max-width: 1050px;
+  margin-top: 26px;
+}
+
+/*
+
+FAVORITE MOVIES
+
+*/
+
+#favorites {
+  background-image: linear-gradient(#fc4863, #fa8c2b, #fa8c2b, #fc4863);
+}
+
+.fav__container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.fav__row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px 0;
+}
+
+/*
+
+FOOTER
+
+*/
+
+#footer {
+  background-image: linear-gradient(#fc4863, #6ab8c4);
+}
+
+.footer__container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.footer__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 48px 0;
+}
+
+.footer__img {
+  width: 100px;
+}
+
+.footer__list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer__copyright {
+  font-size: 20px;
+  color: #c5e4e9;
+}
+
+.footer__github {
+  font-size: 32px;
+}
+
+
+/* TABLETS */
+@media (max-width: 768px) {
+
+  h1 {
+    text-align: center;
+    font-size: 90px;
+  }
+  h2 {
+    font-size: 32px;
+  }
+}
+
+
+/* PHONES */
+@media (max-width: 576px) {
+  h1 {
+    font-size: 64px;
+  }
+  h2 {
+    font-size: 26px;
+  }
 }
