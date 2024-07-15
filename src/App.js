@@ -14,6 +14,7 @@ function App() {
         <Nav />
           <Route path="/" exact component={Home} />
           <Route path="/movies" exact component={Movies} />
+          
           <Route path="/movies/:id" render={() => <MovieDescription />} />
           <Route path="/favorites" exact component={Bookmark} />
         <Footer />

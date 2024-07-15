@@ -46,6 +46,11 @@ function Movies() {
         <div className="w-full mx-auto">
           <div className="w-full flex flex-col items-center">
             <h1 className="text-6xl font-bold m-[24px]">Movie Explorer</h1>
+            try {
+              
+            } catch (error) {
+              
+            }
             <form
               action=""
               className="relative w-full max-w-[500px] flex items-center justify-end"

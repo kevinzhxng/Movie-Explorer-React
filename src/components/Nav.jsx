@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import Logo from "../assets/Movie Explorer Logo.webp";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const Nav = () => {
   return (
@@ -12,15 +13,15 @@ const Nav = () => {
           </a>
           <ul className="nav__links">
             <li className="nav__link">
-              <a href="/">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li className="nav__link">
-              <a href="/movies">Movies</a>
+              <Link to="/movies">Movies</Link>
             </li>
             <li className="nav__link">
-              <a href="/favorites">
-              <FontAwesomeIcon icon="fa-bookmark" />
-                </a>
+              <Link to="/favorites">
+                <FontAwesomeIcon icon="fa-bookmark" />
+              </Link>
             </li>
           </ul>
         </div>
