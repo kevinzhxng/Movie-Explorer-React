@@ -11,9 +11,8 @@ function Movies() {
   const [loading, setLoading] = useState(false);
 
 
-  
-
   async function fetchMovies(event) {
+    setLoading(true)
     event.preventDefault();
     try {
       const response = await axios.get(
