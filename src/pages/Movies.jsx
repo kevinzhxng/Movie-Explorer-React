@@ -8,7 +8,10 @@ function Movies() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchMovies, setSearchMovies] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false);
+
+
+  
 
   async function fetchMovies(event) {
     event.preventDefault();
@@ -16,7 +19,7 @@ function Movies() {
       const response = await axios.get(
         `https://www.omdbapi.com/?i=tt3896198&apikey=1e94ff26&s=${searchTerm}`
       );
-      setLoading()
+      setLoading(false);
       if (response.data.Response === "True" && response.data.Search) {
         setSearchMovies(response.data.Search);
         setErrorMessage("");
@@ -88,23 +91,33 @@ function Movies() {
               <option value="Oldest-Movies">Oldest Movies</option>
             </select>
             {errorMessage && <h2 className="">{errorMessage}</h2>}
-            <div className="flex-wrap flex w-full max-w-[1000px] ">
-              {searchMovies.map((movie) => (
-                <div className="w-3/12 ">
-                  <div className="p-[18px]">
-                    <div className="hover:cursor-pointer">
-                      <Link to={`/movies/${movie.imdbID}`}>
-                        <img className="w-8/10" src={movie.Poster} alt="" />
-                        <h3 className="w-full">
-                          <b>{movie.Title}</b>
-                        </h3>
-                        <p className="w-full">{movie.Year}</p>
-                      </Link>
+            {loading ? (
+              <div class="loader-container">
+                <div class="bouncing-dots">
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                </div>
+              </div>
+            ) : (
+              <div className="flex-wrap flex w-full max-w-[1000px] ">
+                {searchMovies.map((movie) => (
+                  <div className="w-3/12 ">
+                    <div className="p-[18px]">
+                      <div className="hover:cursor-pointer">
+                        <Link to={`/movies/${movie.imdbID}`}>
+                          <img className="w-8/10" src={movie.Poster} alt="" />
+                          <h3 className="w-full">
+                            <b>{movie.Title}</b>
+                          </h3>
+                          <p className="w-full">{movie.Year}</p>
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>

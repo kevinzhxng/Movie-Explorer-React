@@ -7,15 +7,18 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 function MovieDescription() {
   const { id } = useParams();
   const [movieDescription, setMovieDescription] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   async function fetchDescription() {
     const response = await axios.get(
       `https://www.omdbapi.com/?i=${id}&apikey=1e94ff26`
     );
+    setLoading(false);
     setMovieDescription(response.data);
   }
 
   useEffect(() => {
+    setLoading(true);
     fetchDescription();
   }, [id]);
 
@@ -30,7 +33,15 @@ function MovieDescription() {
               </button>
             </Link>
           </div>
-          {movieDescription && (
+          {loading ? (
+            <div class="loader-container">
+              <div class="bouncing-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+              </div>
+            </div>
+          ) : (
             <div className="w-full max-w-[1000px] mx-auto my-0 border-4 border-solid border-[#dd3737] flex rounded-lg">
               <div className="flex w-2/5">
                 <img
@@ -64,11 +75,11 @@ function MovieDescription() {
                   </h3>
                 </div>
                 <div className="mt-8">
-                    <Link to="/favorites">
-                  <button className="bg-gray-900 border box-border text-white cursor-pointer flex-[0_0_auto] text-lg font-semibold leading-6 text-center decoration-auto duration-[0.2s] transition-[background-color,border-color,color,fill,stroke] ease-[cubic-bezier(.4,0,0.2,1)] select-none touch-manipulation w-auto px-[1.2rem] py-3 rounded-xl border-solid border-transparent hover:bg-gray-700 focus:shadow-none focus:outline-none focus:outline-offset-2 md:px-6 md:py-3">
-                    Add to <FontAwesomeIcon icon="fa-bookmark" />
-                  </button>
-                    </Link>
+                  <Link to="/favorites">
+                    <button className="bg-gray-900 border box-border text-white cursor-pointer flex-[0_0_auto] text-lg font-semibold leading-6 text-center decoration-auto duration-[0.2s] transition-[background-color,border-color,color,fill,stroke] ease-[cubic-bezier(.4,0,0.2,1)] select-none touch-manipulation w-auto px-[1.2rem] py-3 rounded-xl border-solid border-transparent hover:bg-gray-700 focus:shadow-none focus:outline-none focus:outline-offset-2 md:px-6 md:py-3">
+                      Add to <FontAwesomeIcon icon="fa-bookmark" />
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
