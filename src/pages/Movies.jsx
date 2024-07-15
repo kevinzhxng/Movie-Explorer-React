@@ -7,14 +7,28 @@ import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 function Movies() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchMovies, setSearchMovies] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(true)
 
   async function fetchMovies(event) {
     event.preventDefault();
-    const response = await axios.get(
-      `https://www.omdbapi.com/?i=tt3896198&apikey=1e94ff26&s=${searchTerm}`
-    );
-    setSearchMovies(response.data.Search);
-
+    try {
+      const response = await axios.get(
+        `https://www.omdbapi.com/?i=tt3896198&apikey=1e94ff26&s=${searchTerm}`
+      );
+      setLoading()
+      if (response.data.Response === "True" && response.data.Search) {
+        setSearchMovies(response.data.Search);
+        setErrorMessage("");
+      } else {
+        setSearchMovies([]);
+        setErrorMessage("No movies found :( TRY AGAIN");
+      }
+    } catch (error) {
+      console.error("Error fetching movies: ", error);
+      setSearchMovies([]);
+      setErrorMessage("failed to fetch movies, please try again later");
+    }
   }
 
   function sortMovies(filter) {
@@ -35,8 +49,6 @@ function Movies() {
     setSearchMovies(sortedMovies);
   }
 
-
-
   return (
     <>
       <section
@@ -46,11 +58,6 @@ function Movies() {
         <div className="w-full mx-auto">
           <div className="w-full flex flex-col items-center">
             <h1 className="text-6xl font-bold m-[24px]">Movie Explorer</h1>
-            try {
-              
-            } catch (error) {
-              
-            }
             <form
               action=""
               className="relative w-full max-w-[500px] flex items-center justify-end"
@@ -69,7 +76,6 @@ function Movies() {
                 <FontAwesomeIcon icon={faSearch} className="p-[6px]" />
               </button>
             </form>
-            {/* TODO filter movies */}
             <select
               id="filter"
               onChange={(event) => sortMovies(event.target.value)}
@@ -81,18 +87,19 @@ function Movies() {
               <option value="Latest-Movies">Latest Movies</option>
               <option value="Oldest-Movies">Oldest Movies</option>
             </select>
+            {errorMessage && <h2 className="">{errorMessage}</h2>}
             <div className="flex-wrap flex w-full max-w-[1000px] ">
               {searchMovies.map((movie) => (
                 <div className="w-3/12 ">
                   <div className="p-[18px]">
                     <div className="hover:cursor-pointer">
-                    <Link to={`/movies/${movie.imdbID}`}>
-                      <img className="w-8/10" src={movie.Poster} alt="" />
-                      <h3 className="w-full">
-                        <b>{movie.Title}</b>
-                      </h3>
-                      <p className="w-full">{movie.Year}</p>
-                    </Link>
+                      <Link to={`/movies/${movie.imdbID}`}>
+                        <img className="w-8/10" src={movie.Poster} alt="" />
+                        <h3 className="w-full">
+                          <b>{movie.Title}</b>
+                        </h3>
+                        <p className="w-full">{movie.Year}</p>
+                      </Link>
                     </div>
                   </div>
                 </div>

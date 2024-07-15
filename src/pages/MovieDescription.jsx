@@ -31,7 +31,7 @@ function MovieDescription() {
             </Link>
           </div>
           {movieDescription && (
-            <div className="w-full max-w-[1000px] mx-auto my-0 border-4 border-solid border-[black] flex">
+            <div className="w-full max-w-[1000px] mx-auto my-0 border-4 border-solid border-[#dd3737] flex rounded-lg">
               <div className="flex w-2/5">
                 <img
                   className="w-full p-[15%]"
